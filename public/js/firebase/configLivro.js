@@ -1,0 +1,96 @@
+const apiKey = "AIzaSyCQPl9y2sEgBYOfalW6DneZFwVoi3hnA0M";
+
+const buscaLivroTexto = async (pesquisa, inicio) => {
+    try {
+        const resultado = await fetch(
+            `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(pesquisa)}&orderBy=relevance&key=AIzaSyCQPl9y2sEgBYOfalW6DneZFwVoi3hnA0M&startIndex=${inicio}`
+        );
+        const info = await resultado.json();
+
+        if (info.totalItems > 0) {
+            const Filtrado = info.items.filter(item => {
+                const identifiers = item.volumeInfo?.industryIdentifiers;
+                return identifiers && (identifiers[0]?.type === 'ISBN_13' || identifiers[0]?.type === 'ISBN_10');
+            });
+
+            return Filtrado.map((item) => ({
+                titulo: item.volumeInfo?.title || "Desconhecido",
+                autor: item.volumeInfo?.authors?.[0] || "Desconhecido",
+                sinopse: item.volumeInfo?.description || "Sem descrição.",
+                imagem: item.volumeInfo?.imageLinks?.thumbnail || "https://res.cloudinary.com/dwxftry8e/image/upload/v1732737936/Desconhecido_k7agsq.png",
+                isbn13: item.volumeInfo?.industryIdentifiers?.[0]?.identifier || "Desconhecido",
+                editora: item.volumeInfo?.publisher || "Desconhecida",
+                paginas: item.volumeInfo?.pageCount || "?"
+            }));
+        } else {
+            console.log("Sem livros.");
+            return [];
+        }
+    } catch (e) {
+        console.error("Erro na busca de livros: ", e);
+        return [];
+    }
+};
+
+
+
+
+const buscaLivroISBN2 = async (pesquisa) => {
+    try {
+        const resultado = await fetch(
+            `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(pesquisa)}&orderBy=relevance&key=AIzaSyCQPl9y2sEgBYOfalW6DneZFwVoi3hnA0M&startIndex=0`
+        );
+        const info = await resultado.json();
+        
+        if (info.totalItems > 0) {
+        console.log(info);
+        const item = info.items[0];
+
+            return {
+                titulo: item.volumeInfo?.title || "Desconhecido",
+                autor: item.volumeInfo?.authors?.[0] || "Desconhecido",
+                sinopse: item.volumeInfo?.description || "Sem descrição.",
+                imagem: item.volumeInfo?.imageLinks?.thumbnail || "https://res.cloudinary.com/dwxftry8e/image/upload/v1732737936/Desconhecido_k7agsq.png",
+                isbn13: item.volumeInfo?.industryIdentifiers?.[0]?.identifier || "Desconhecido",
+                editora: item.volumeInfo?.publisher || "Desconhecida",
+                paginas: item.volumeInfo?.pageCount || "?"
+            };
+        } else {
+            console.log("Sem livros.")
+            return [];
+        }
+    } catch (e) {
+        console.error("Erro na busca de livros: ", e);
+        return [];
+    }
+};
+
+
+const buscaLivroISBN = async (pesquisa) => {
+    try {
+        const resultado = await fetch(
+            `https://www.googleapis.com/books/v1/volumes?q=isbn:${pesquisa}&key=${apiKey}`
+        );
+        const info = await resultado.json();
+        if (info.totalItems > 0) {
+            const item = info.items[0];
+
+            return {
+                titulo: item.volumeInfo?.title || "Desconhecido",
+                autor: item.volumeInfo?.authors?.[0] || "Desconhecido",
+                sinopse: item.volumeInfo?.description || "Sem descrição.",
+                imagem: item.volumeInfo?.imageLinks?.thumbnail || "https://res.cloudinary.com/dwxftry8e/image/upload/v1732737936/Desconhecido_k7agsq.png",
+                isbn13: item.volumeInfo?.industryIdentifiers?.[0]?.identifier || "Desconhecido",
+                editora: item.volumeInfo?.publisher || "Desconhecida",
+                paginas: item.volumeInfo?.pageCount || "?"
+            };
+        } else {
+            return buscaLivroISBN2(pesquisa);
+        }
+    } catch (e) {
+        console.log("Sem livros.")
+        return [];
+    }
+};
+
+export {buscaLivroISBN, buscaLivroISBN2, buscaLivroTexto};
