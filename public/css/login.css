@@ -161,6 +161,39 @@ body, html {
     cursor: pointer;
 }
 
+.senha-container {
+    position: relative;
+}
+
+#password {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    transition: all linear 160ms;
+    outline: none;
+}
+
+#password:focus {
+    border: 1px solid var(--font-bg-cinza-escuro);
+}
+
+#toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
+    font-size: 18px;
+}
+
+#toggle-password:hover {
+    color: #555;
+}
+
 
 @media (max-width: 480px) {
     .icone-voltar-login {
@@ -388,6 +421,43 @@ body, html {
     width: 100%;
     margin-top: -8vw;
 }
+
+.senha-container {
+    position: relative;
+    width: 100%;
+}
+
+
+.senha-container input {
+    width: 100%;
+    padding: 10px;
+    font-size: 13px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding-right: 30px; 
+    transition: all linear 160ms;
+    outline: none;
+}
+
+
+.senha-container i {
+    position: absolute;
+    top: 50%;
+    right: 10px; 
+    transform: translateY(-50%); 
+    cursor: pointer; 
+}
+
+.senha-container input:focus {
+    border: 1px solid var(--font-bg-cinza-escuro);
+}
+
+
+.senha-container i {
+    font-size: 18px;
+    color: #888;
+}
+
 
 .form-login-cadastro input {
     width: 100%; 
