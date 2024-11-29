@@ -19,7 +19,12 @@
   
     <div class="collapse navbar-collapse navbar-collapsed" id="navbarNavAltMarkup">
       <div class="navbar-search-center">
-        
+        <form class="d-flex" id="formPesquisa">
+          <input id="inpPesquisa" class="search-input me-2" type="search" placeholder="Pesquisar" aria-label="Pesquisar">
+          <button id="btnPesquisa" class="search-button" type="submit">
+            <img src="../img/pesquisar.png" alt="Pesquisar" class="search-icon">
+          </button>
+        </form>
       </div>
   
       <div class="navbar-icons-right navbar-nav ms-auto">
@@ -106,133 +111,109 @@
     </div>
     
     <div class="container-cadastro" style="display: none;">
-      <button class="btn-voltar">
-          <img src="../img/Icones/icone-voltar.png" alt="Voltar" class="icone-voltar-login">
-      </button>
-      <form method="POST" class="form-login-cadastro" id="formCadastro">
-          <img src="../img/logo.png" alt="logo" class="img-login-cadastro">
-          <h1 class="titulo-login-cadastro">Cadastrar</h1>
-          <p class="mensagem-login">Adicione seus dados de acesso no campo abaixo.</p>
-    
-          <!-- Tipo de Pessoa (Fisica ou Juridica) -->
-          <div class="input-group">
-              <label>
-                  <input type="radio" name="tipo-pessoa" value="fisica" id="radio-fisica"> Pessoa Física
-              </label>
-              <label>
-                  <input type="radio" name="tipo-pessoa" value="juridica" id="radio-juridica"> Pessoa Jurídica
-              </label>
-          </div>
-    
-          <!-- Documento -->
-          <div class="input-group">
-              <input type="text" id="documento" placeholder="N° Documento (CPF ou CNPJ)" oninput="apenasNumeros(event); formatarDocumento()" />
-          </div>
-    
-          <!-- Nome Completo -->
-          <label for="nome">Nome Completo</label>
-          <input type="text" id="nome" placeholder="Digite seu nome completo" required />
-    
-          <!-- CEP -->
-          <label for="cep">CEP</label>
-          <input type="text" id="cep" name="cep" maxlength="9" onblur="consultarCEP()" />
-    
-          <!-- Endereço -->
-          <div class="input-group">
-              <label for="logradouro">Logradouro:</label>
-              <input type="text" id="logradouro" readonly />
-          </div>
-          <div class="input-group">
-              <label for="bairro">Bairro:</label>
-              <input type="text" id="bairro" readonly />
-          </div>
-          <div class="input-group">
-              <label for="cidade">Cidade:</label>
-              <input type="text" id="cidade" readonly />
-          </div>
-          <div class="input-group">
-              <label for="uf">UF:</label>
-              <input type="text" id="uf" readonly maxlength="2" />
-          </div>
-    
-          <!-- Email -->
-          <label for="email-cadastro">Email</label>
-          <input type="email" id="email-cadastro" placeholder="Digite seu e-mail" required />
-    
-          <!-- Senha e Confirmar senha -->
-          <div class="input-group">
-              <div class="input-field">
-                  <label for="senha">Senha</label>
-                  <input type="password" id="senha" placeholder="Digite sua senha" required />
-              </div>
-              <div class="input-field">
-                  <label for="confirmar_senha">Confirmar senha</label>
-                  <input type="password" id="confirmar_senha" placeholder="Confirme sua senha" required />
-              </div>
-          </div>
-    
-          <!-- Botão de Cadastro -->
-          <input type="submit" value="Cadastrar">
-      </form>
+        <button class="btn-voltar">
+            <img src="../img/Icones/icone-voltar.png" alt="Voltar" class="icone-voltar-login">
+          </button>
+        <form method="POST" class="form-login-cadastro" id="formCadastro">
+            <img src="../img/logo.png" alt="logo" class="img-login-cadastro">
+            <h1 class="titulo-login-cadastro">Cadastrar</h1>
+            <p class="mensagem-login">Adicione seus dados de acesso no campo abaixo.</p>
+     <!-- Tipo de Pessoa (Fisica ou Juridica) -->
+     <div class="input-group">
+        <label class="label-login">
+            <input type="radio" name="tipo-pessoa" value="CPF" id="radio-fisica"> <p>Pessoa Física</p>
+        </label>
+        <label class="label-login">
+            <input type="radio" name="tipo-pessoa" value="CNPJ" id="radio-juridica" > <p>Pessoa Jurídica</p>
+        </label>
     </div>
     
-    <!-- Script com as funções JavaScript -->
-    <script>
-        // Função para formatar CPF ou CNPJ e garantir que só aceitem números
-        function formatarDocumento() {
-            const documento = document.getElementById('documento');
-            let valor = documento.value.replace(/\D/g, ''); // Remove qualquer caractere não numérico
-            
-            // Limitar o tamanho do CPF ou CNPJ
-            const tipoPessoa = document.querySelector('input[name="tipo-pessoa"]:checked').value;
+    <div class="input-group">
+        <input type="text" id="documento" class="input-form" placeholder="N° Documento (CPF ou CNPJ)">
+    </div>
     
-            if (tipoPessoa === 'fisica' && valor.length > 11) {
-                valor = valor.substring(0, 11);
-            } else if (tipoPessoa === 'juridica' && valor.length > 14) {
-                valor = valor.substring(0, 14);
-            }
+            <!-- Nome Completo -->
+            <label class="label-login" for="nome">Nome Completo</label>
+            <input type="text" id="nome" placeholder="Digite seu nome completo" required />
     
-            // Formatar CPF
-            if (tipoPessoa === 'fisica') {
-                valor = valor.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
-            }
+           
+
     
-            // Formatar CNPJ
-            if (tipoPessoa === 'juridica') {
-                valor = valor.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");
-            }
+            <!-- CEP e Cidade (dividido em duas colunas) -->
+            <div class="input-group">
+                <div class="input-field">
+                    <label class="label-login" for="cidade">Cidade</label>
+                    <select id="cidade" required>
+                        
+                        <option value="" disabled selected>Selecione</option>
+                        <option value="São Paulo">São Paulo</option>
+                        <option value="Campinas">Campinas</option>
+                        <option value="Guarulhos">Guarulhos</option>
+                        <option value="São Bernardo do Campo">São Bernardo do Campo</option>
+                        <option value="São José dos Campos">São José dos Campos</option>
+                        <option value="Ribeirão Preto">Ribeirão Preto</option>
+                        <option value="Santos">Santos</option>
+                        <option value="Sorocaba">Sorocaba</option>
+                        <option value="Mauá">Mauá</option>
+                        <option value="Osasco">Osasco</option>
+                        <option value="Diadema">Diadema</option>
+                        <option value="Jundiaí">Jundiaí</option>
+                        <option value="Piracicaba">Piracicaba</option>
+                        <option value="Bauru">Bauru</option>
+                        <option value="São Carlos">São Carlos</option>
+                        <option value="Indaiatuba">Indaiatuba</option>
+                        <option value="Taubaté">Taubaté</option>
+                        <option value="Franca">Franca</option>
+                        <option value="Barueri">Barueri</option>
+                        <option value="Botucatu">Botucatu</option>
+                        <option value="Itu">Itu</option>
+                        <option value="Bragança Paulista">Bragança Paulista</option>
+                        <option value="Marília">Marília</option>
+                        <option value="Tatuí">Tatuí</option>
+                        <option value="São Vicente">São Vicente</option>
+                        <option value="Jaguariúna">Jaguariúna</option>
+                        <option value="Atibaia">Atibaia</option>
+                        <option value="Caraguatatuba">Caraguatatuba</option>
+                        <option value="Avaré">Avaré</option>
+                        <option value="Presidente Prudente">Presidente Prudente</option>
+                        <option value="Rio Claro">Rio Claro</option>
+                        <option value="Sorocaba">Sorocaba</option>
+                        <option value="Limeira">Limeira</option>
+                        <option value="Catanduva">Catanduva</option>
+                        <option value="São Sebastião">São Sebastião</option>
+                        <option value="Pindamonhangaba">Pindamonhangaba</option>
+                        <option value="Assis">Assis</option>
+                        <option value="São Roque">São Roque</option>
+                        <option value="Santa Bárbara d'Oeste">Santa Bárbara d'Oeste</option>
+                        <option value="Itapevi">Itapevi</option>
+                        <option value="Indaiatuba">Indaiatuba</option>
+                        <option value="Igaratá">Igaratá</option>
+                        <option value="Mogi das Cruzes">Mogi das Cruzes</option>
+                        <option value="Guarujá">Guarujá</option>
+                    </select>
+                </div>
+            </div>
     
-            documento.value = valor; // Atualiza o valor do campo com a formatação correta
-        }
+            <!-- Email -->
+            <label class="label-login" for="email-cadastro">Email</label>
+            <input type="email" id="email-cadastro" placeholder="Digite seu e-mail" required />
     
-        // Função para garantir que o campo só aceite números
-        function apenasNumeros(event) {
-            const input = event.target;
-            input.value = input.value.replace(/\D/g, '');  // Remove qualquer coisa que não seja número
-        }
+            <!-- Senha e Confirmar senha -->
+            <div class="input-group">
+                <div class="input-field">
+                    <label class="label-login" for="senha">Senha</label>
+                    <input type="password" id="senha" placeholder="Digite sua senha" required />
+                </div>
+                <div class="input-field">
+                    <label class="label-login" for="confirmar_senha">Confirmar senha</label>
+                    <input type="password" id="confirmar_senha" placeholder="Confirme sua senha" required />
+                </div>
+            </div>
     
-        // Função para consultar o CEP e preencher os campos de endereço
-        function consultarCEP() {
-            const cep = document.getElementById('cep').value.replace(/\D/g, '');  // Remove caracteres não numéricos
-    
-            if (cep.length === 8) {
-                const url = `https://viacep.com.br/ws/${cep}/json/`;
-                fetch(url)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (!data.erro) {
-                            document.getElementById('logradouro').value = data.logradouro;
-                            document.getElementById('bairro').value = data.bairro;
-                            document.getElementById('cidade').value = data.localidade;
-                            document.getElementById('uf').value = data.uf;
-                        } else {
-                            alert("CEP não encontrado.");
-                        }
-                    })
-                    .catch(error => alert("Erro ao consultar o CEP."));
-            }
-        }
-    </script>
+            <!-- Botão de Cadastro -->
+            <input type="submit" value="Cadastrar" class="btn" />
+        </form>
+    </div>
     
     
 
@@ -296,6 +277,7 @@
 
   <script src="../js/js/bootstrap.bundle.min.js"></script>
   <script src="../js/login.js" type="module"></script>   
+  
 <script src="../js/pesquisa.js"></script>
 </body>
 </html>

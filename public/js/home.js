@@ -7,10 +7,6 @@ import {onAuthStateChanged} from "https://www.gstatic.com/firebasejs/9.0.0/fireb
 const formPesquisa = document.getElementById("formPesquisa");
 const inpPesquisa = document.getElementById("inpPesquisa");
 
-const pegaPesquisa = async() => {
-  const urlPesquisa = new URLSearchParams(window.location.search);
-  return urlPesquisa.get("q");
-}
 
 const pesquisaObra = async(pesquisa) => {
   const valor = pesquisa;

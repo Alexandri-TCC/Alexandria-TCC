@@ -371,11 +371,12 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 });
-function exibirAviso() {
+
+document.getElementById("btnInfo").addEventListener("click", async () => {
   alert("⚠️ Atenção: Não divulgue informações pessoais na internet.\n\n" +
-        "Consequências podem incluir roubo de identidade, golpes financeiros " +
-        "e comprometimento da sua segurança. Proteja-se!");
-}
+    "Consequências podem incluir roubo de identidade, golpes financeiros " +
+    "e comprometimento da sua segurança. Proteja-se!");
+});
 
 
 

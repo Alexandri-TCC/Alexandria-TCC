@@ -19,7 +19,11 @@ document.getElementById("formLogin").addEventListener("submit", async (event) =>
             alert("Por favor, verifique seu email antes de acessar.");
         }
     } catch (e) {
-        alert("Erro ao realizar login: " + e.message);
+        if (e.message == "Firebase: Error (auth/invalid-login-credentials).") {
+            alert("Email e/ou Senha inválidos.")
+        } else {
+            alert("Erro ao realizar login: " + e.message);
+        }
     }
 });
 
@@ -64,6 +68,8 @@ console.log(tipo_documento + " e " + documento);
             const usuAut = await createUserWithEmailAndPassword(verificador, email, senha);
             const usuID = usuAut.user.uid;
     
+            await sendEmailVerification(verificador.currentUser);
+
             await setDoc(doc(banco, "usuarios", usuID), {
                 nome_usu: nome,
                 email_usu: email,
@@ -76,11 +82,14 @@ console.log(tipo_documento + " e " + documento);
                 moedas_usu: 0,
                 nivel_usu: 1
             });
-    
-            await sendEmailVerification(verificador.currentUser);
+            
             alert("Cadastro Realizado! Enviamos um link de confirmação ao seu email.");
         } catch (e) {
-            alert("Erro ao cadastrar: " + e);
+            if (e == "FirebaseError: Firebase: Error (auth/weak-password).") {
+                alert("Por favor escolha uma senha mais forte.")
+            } else {
+                alert("Erro ao cadastrar: " + e);
+            }
         }
     }
     

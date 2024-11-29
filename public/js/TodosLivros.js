@@ -80,16 +80,14 @@ const carregarObras = async (pesquisa, containerId, inicio) => {
 
 
 
-// Função para alternar o menu lateral
-function toggleMenu() {
-    const sidebar = document.getElementById("sidebar");
-    const content = document.getElementById("content");
-
-    if (sidebar && content) {
-        sidebar.classList.toggle("collapsed");
-        content.classList.toggle("collapsed");
-    }
-}
+document.getElementById("collapseBtn").addEventListener("click", async () => {
+  const sidebar = document.getElementById("sidebar");
+  const content = document.getElementById("content");
+  if (sidebar && content) {
+      sidebar.classList.toggle("collapsed");
+      content.classList.toggle("collapsed");
+  }
+})
 
 // Função para alternar a visibilidade do menu de filtros
 function toggleFilterMenu() {

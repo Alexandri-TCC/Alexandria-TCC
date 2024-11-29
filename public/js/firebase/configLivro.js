@@ -1,9 +1,10 @@
-const apiKey = "AIzaSyCQPl9y2sEgBYOfalW6DneZFwVoi3hnA0M";
+const apiKey = "AIzaSyCSUsb2IjSgUuimC5J6zwzED5BS0BAcrT8";
 
 const buscaLivroTexto = async (pesquisa, inicio) => {
+    console.log(apiKey);
     try {
         const resultado = await fetch(
-            `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(pesquisa)}&orderBy=relevance&key=AIzaSyCQPl9y2sEgBYOfalW6DneZFwVoi3hnA0M&startIndex=${inicio}`
+            `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(pesquisa)}&orderBy=relevance&key=${apiKey}&startIndex=${inicio}`
         );
         const info = await resultado.json();
 
@@ -38,7 +39,7 @@ const buscaLivroTexto = async (pesquisa, inicio) => {
 const buscaLivroISBN2 = async (pesquisa) => {
     try {
         const resultado = await fetch(
-            `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(pesquisa)}&orderBy=relevance&key=AIzaSyCQPl9y2sEgBYOfalW6DneZFwVoi3hnA0M&startIndex=0`
+            `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(pesquisa)}&orderBy=relevance&key=${apiKey}&startIndex=0`
         );
         const info = await resultado.json();
         
