@@ -110,7 +110,7 @@
         </form>
     </div>
     
-    <!-- Tela de Cadastro -->
+   <!-- Tela de Cadastro -->
 <div class="container-cadastro" style="display: none;">
   <button class="btn-voltar">
       <img src="../img/Icones/icone-voltar.png" alt="Voltar" class="icone-voltar-login">
@@ -123,16 +123,16 @@
       <!-- Tipo de Pessoa (Fisica ou Juridica) -->
       <div class="input-group">
           <label>
-              <input type="radio" name="tipo-pessoa" value="fisica" id="radio-fisica"> Pessoa Física
+              <input type="radio" name="tipo-pessoa" value="fisica" id="radio-fisica" onclick="toggleDocumento(true)" required> Pessoa Física
           </label>
           <label>
-              <input type="radio" name="tipo-pessoa" value="juridica" id="radio-juridica"> Pessoa Jurídica
+              <input type="radio" name="tipo-pessoa" value="juridica" id="radio-juridica" onclick="toggleDocumento(true)" required> Pessoa Jurídica
           </label>
       </div>
 
-      <!-- Documento -->
-      <div class="input-group">
-          <input type="text" id="documento" placeholder="N° Documento (CPF ou CNPJ)" oninput="apenasNumeros(event); formatarDocumento()" />
+      <!-- Documento (CPF ou CNPJ) -->
+      <div class="input-group" id="documento-container" style="display: none;">
+          <input type="text" id="documento" placeholder="N° Documento (CPF ou CNPJ)" oninput="apenasNumeros(event); formatarDocumento()" required />
       </div>
 
       <!-- Nome Completo -->
@@ -184,6 +184,20 @@
 
 <!-- Script com as funções JavaScript -->
 <script>
+    // Função para exibir ou ocultar o campo de CPF ou CNPJ com base na seleção
+    function toggleDocumento(show) {
+        const documentoContainer = document.getElementById('documento-container');
+        const documentoField = document.getElementById('documento');
+        if (show) {
+            documentoContainer.style.display = 'block'; // Exibe o campo de documento
+            documentoField.setAttribute('required', 'required'); // Torna obrigatório
+        } else {
+            documentoContainer.style.display = 'none'; // Oculta o campo de documento
+            documentoField.removeAttribute('required'); // Remove a obrigatoriedade
+            documentoField.value = ''; // Limpa o campo
+        }
+    }
+
     // Função para formatar CPF ou CNPJ e garantir que só aceitem números
     function formatarDocumento() {
         const documento = document.getElementById('documento');
@@ -239,6 +253,7 @@
         }
     }
 </script>
+
 
 
     <footer id="rodape" class="fundo-cinza">
