@@ -825,3 +825,38 @@ body {
 .content.collapsed {
     margin-left: 0; /* Remove o espaço reservado para o menu lateral */
 }
+/* Container que vai manter os cards */
+.livros {
+    display: flex;
+    flex-wrap: wrap;   /* Permite que os cards quebrem linha quando necessário */
+    justify-content: space-between;  /* Espaçamento entre os cards */
+    gap: 20px; /* Espaço entre os cards */
+    margin-top: 20px;
+  }
+  
+  /* Card do livro */
+  .card-livro {
+    width: 100%;  /* Largura total para telas pequenas */
+    max-width: 300px; /* Tamanho máximo do card */
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    text-align: center;
+  }
+  
+  /* Exibição dos cards em linha (dois por linha) em telas médias */
+  @media (min-width: 768px) {
+    .card-livro {
+      width: 45%;  /* Dois cards por linha */
+    }
+  }
+  
+  /* Exibição dos cards em linha (três por linha) em telas grandes */
+  @media (min-width: 1024px) {
+    .card-livro {
+      width: 30%;  /* Três cards por linha */
+    }
+  }
+  
