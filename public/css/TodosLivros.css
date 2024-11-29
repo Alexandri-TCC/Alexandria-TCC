@@ -609,3 +609,219 @@ body, html {
         white-space: nowrap;
     }
 }
+.sidebar {
+    width: 250px;
+    background-color: #f4f4f4;
+    padding: 20px;
+    overflow-y: auto;
+    position: fixed;
+    height: 100%;
+  }
+  
+  .content {
+    margin-left: 250px;
+    padding: 20px;
+  }
+  
+  .filter-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .book-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+  }
+  
+  .book-item {
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .filter-menu {
+    display: none;
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    list-style: none;
+    padding: 5px;
+  }
+  
+  .filter-menu li {
+    cursor: pointer;
+    padding: 5px 10px;
+  }
+  
+  .filter-menu li:hover {
+    background-color: #f4f4f4;
+  }
+
+  /* Menu lateral */
+.sidebar {
+    width: 200px; /* Define um tamanho fixo menor */
+    height: 100vh; /* Ajusta para ocupar a altura total da viewport */
+    color: #fdd835;
+    position: fixed; /* Fixa o menu na posição */
+    transition: transform 0.3s ease;
+    overflow-y: auto; /* Ativa a rolagem no eixo vertical */
+    background-color: #f8f9fa; /* Cor de fundo para contraste */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Adiciona um leve sombreamento */
+    padding-top: 20px;
+}
+
+
+
+/* Botão de colapso ajustado */
+#collapseBtn {
+    font-size: 20px;
+    margin-right: 0; /* Remove espaçamento lateral */
+    text-align: center; /* Centraliza o botão */
+}
+
+/* Título e itens do menu lateral */
+.sidebar-title {
+    font-size: 16px; /* Ajusta o tamanho da fonte */
+    padding: 10px 15px;
+    text-align: center;
+}
+
+.sidebar-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-list li {
+    padding: 10px 15px;
+}
+
+.sidebar-link {
+    color: rgb(75, 75, 75);
+    text-decoration: none;
+    display: block;
+    font-size: 14px; /* Reduz tamanho da fonte */
+    transition: background 0.3s;
+}
+
+.sidebar-link:hover {
+    background-color: #eaeaea;
+}
+
+/* Área de conteúdo principal ajustada */
+.content {
+    margin-left: 200px; /* Ajusta espaço do conteúdo para o menu menor */
+    padding: 20px;
+    background-color: #f8f9fa;
+    transition: margin-left 0.3s;
+}
+
+.sidebar {
+    color: black;
+    position: fixed; 
+    left: 0; 
+    background-color: rgb(240, 238, 238); 
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); 
+    padding-top: 20px;
+    font-family: var(--font-text); /* Fonte definida via variável */
+    z-index: 10; /* Adicionado para garantir a sobreposição */
+    overflow-y: auto; /* Adicionado para rolagem vertical */
+    position: absolute; /* Adicionado */
+}
+
+#collapseBtn {
+    font-size: 24px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #333;
+    margin-right: 15px; /* Adicionado */
+}
+
+.sidebar-title {
+    padding: 10px;
+    font-size: 18px;
+    text-align: center;
+    font-family: var(--font-titulo); /* Fonte definida via variável */
+    font-weight: 600;
+    margin-top: 1vw; /* Adicionado */
+}
+
+.sidebar-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-list li {
+    padding: 10px 15px;
+}
+
+.sidebar-link {
+    color: rgb(75, 75, 75);
+    text-decoration: none;
+    display: block;
+    padding: 8px;
+    transition: background 0.3s; /* Adicionado para suavizar mudanças de fundo */
+    font-style: italic; /* Adicionado */
+}
+
+.sidebar-link:hover {
+    background-color: #eaeaea; /* Adicionado */
+}
+
+.sidebar-link.active {
+    font-weight: bold; /* Adicionado */
+}
+
+.sidebar.collapsed {
+    width: 0px; /* Adicionado para o estado colapsado */
+}
+
+
+
+/* Ajusta a posição do menu lateral */
+.sidebar {
+    width: 200px;
+    background-color: rgb(240, 238, 238);
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    position: absolute; /* Posicionado ao lado do conteúdo */
+    left: 0;
+    padding-top: 20px;
+    overflow-y: auto;
+    z-index: 10;
+    height: 50%;
+}
+
+/* Rodapé fixado na parte inferior */
+footer {
+    position: relative; /* Rodapé flui naturalmente abaixo do conteúdo */
+    bottom: 0;
+    width: 100%;
+}
+
+/* Garantir que a área não interativa dentro do sidebar tenha a mesma cor do body */
+#menuLateral {
+    background-color: (240, 238, 238);
+    padding: 10px;
+}
+
+body {
+    background-color: #edece8; 
+}
+.content{
+    background-color: #edece8;
+}
+/* Ocultar o menu lateral ao colapsar */
+.sidebar.collapsed {
+    transform: translateX(-100%); /* Move o menu para fora da tela */
+}
+
+/* Ajustar o conteúdo ao colapsar o menu */
+.content.collapsed {
+    margin-left: 0; /* Remove o espaço reservado para o menu lateral */
+}

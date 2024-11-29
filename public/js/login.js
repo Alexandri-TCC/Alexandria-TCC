@@ -191,3 +191,71 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
 });
+// Função para exibir ou ocultar o campo de CPF ou CNPJ com base na seleção
+function toggleDocumento(show) {
+    const documentoContainer = document.getElementById('documento-container');
+    const documentoField = document.getElementById('documento');
+    if (show) {
+        documentoContainer.style.display = 'block'; // Exibe o campo de documento
+        documentoField.setAttribute('required', 'required'); // Torna obrigatório
+    } else {
+        documentoContainer.style.display = 'none'; // Oculta o campo de documento
+        documentoField.removeAttribute('required'); // Remove a obrigatoriedade
+        documentoField.value = ''; // Limpa o campo
+    }
+}
+
+// Função para formatar CPF ou CNPJ e garantir que só aceitem números
+function formatarDocumento() {
+    const documento = document.getElementById('documento');
+    let valor = documento.value.replace(/\D/g, ''); // Remove qualquer caractere não numérico
+    
+    // Limitar o tamanho do CPF ou CNPJ
+    const tipoPessoa = document.querySelector('input[name="tipo-pessoa"]:checked').value;
+
+    if (tipoPessoa === 'fisica' && valor.length > 11) {
+        valor = valor.substring(0, 11);
+    } else if (tipoPessoa === 'juridica' && valor.length > 14) {
+        valor = valor.substring(0, 14);
+    }
+
+    // Formatar CPF
+    if (tipoPessoa === 'fisica') {
+        valor = valor.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+    }
+
+    // Formatar CNPJ
+    if (tipoPessoa === 'juridica') {
+        valor = valor.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");
+    }
+
+    documento.value = valor; // Atualiza o valor do campo com a formatação correta
+}
+
+// Função para garantir que o campo só aceite números
+function apenasNumeros(event) {
+    const input = event.target;
+    input.value = input.value.replace(/\D/g, '');  // Remove qualquer coisa que não seja número
+}
+
+// Função para consultar o CEP e preencher os campos de endereço
+function consultarCEP() {
+    const cep = document.getElementById('cep').value.replace(/\D/g, '');  // Remove caracteres não numéricos
+
+    if (cep.length === 8) {
+        const url = `https://viacep.com.br/ws/${cep}/json/`;
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if (!data.erro) {
+                    document.getElementById('logradouro').value = data.logradouro;
+                    document.getElementById('bairro').value = data.bairro;
+                    document.getElementById('cidade').value = data.localidade;
+                    document.getElementById('uf').value = data.uf;
+                } else {
+                    alert("CEP não encontrado.");
+                }
+            })
+            .catch(error => alert("Erro ao consultar o CEP."));
+    }
+}

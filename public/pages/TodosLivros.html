@@ -1,39 +1,260 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../css/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/TodosLivros.css">
-    <title>Alexandria</title>
-    <link rel="shortcut icon" href="../img/Icones/logo.png" type="image/x-icon">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="../css/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/TodosLivros.css">
+  <title>Alexandria</title>
+  <link rel="shortcut icon" href="../img/Icones/logo.png" type="image/x-icon">
 </head>
+<style>
+  .sidebar {
+  width: 250px;
+  background-color: #f4f4f4;
+  padding: 20px;
+  overflow-y: auto;
+  position: fixed;
+  height: 100%;
+}
+
+.content {
+  margin-left: 250px;
+  padding: 20px;
+}
+
+.filter-container {
+  display: flex;
+  align-items: center;
+}
+
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 20px;
+}
+
+.book-item {
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  text-align: center;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.filter-menu {
+  display: none;
+  position: absolute;
+  background: white;
+  border: 1px solid #ccc;
+  list-style: none;
+  padding: 5px;
+}
+
+.filter-menu li {
+  cursor: pointer;
+  padding: 5px 10px;
+}
+
+.filter-menu li:hover {
+  background-color: #f4f4f4;
+}
+/* Menu lateral */
+.sidebar {
+    width: 200px; /* Define um tamanho fixo menor */
+    height: 100vh; /* Ajusta para ocupar a altura total da viewport */
+    color: #fdd835;
+    position: fixed; /* Fixa o menu na posição */
+    transition: transform 0.3s ease;
+    overflow-y: auto; /* Ativa a rolagem no eixo vertical */
+    background-color: #f8f9fa; /* Cor de fundo para contraste */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Adiciona um leve sombreamento */
+    padding-top: 20px;
+}
+
+
+
+/* Botão de colapso ajustado */
+#collapseBtn {
+    font-size: 20px;
+    margin-right: 0; /* Remove espaçamento lateral */
+    text-align: center; /* Centraliza o botão */
+}
+
+/* Título e itens do menu lateral */
+.sidebar-title {
+    font-size: 16px; /* Ajusta o tamanho da fonte */
+    padding: 10px 15px;
+    text-align: center;
+}
+
+.sidebar-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-list li {
+    padding: 10px 15px;
+}
+
+.sidebar-link {
+    color: rgb(75, 75, 75);
+    text-decoration: none;
+    display: block;
+    font-size: 14px; /* Reduz tamanho da fonte */
+    transition: background 0.3s;
+}
+
+.sidebar-link:hover {
+    background-color: #eaeaea;
+}
+
+/* Área de conteúdo principal ajustada */
+.content {
+    margin-left: 200px; /* Ajusta espaço do conteúdo para o menu menor */
+    padding: 20px;
+    background-color: #f8f9fa;
+    transition: margin-left 0.3s;
+}
+
+.sidebar {
+    color: black;
+    position: fixed; 
+    left: 0; 
+    background-color: rgb(240, 238, 238); 
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); 
+    padding-top: 20px;
+    font-family: var(--font-text); /* Fonte definida via variável */
+    z-index: 10; /* Adicionado para garantir a sobreposição */
+    overflow-y: auto; /* Adicionado para rolagem vertical */
+    position: absolute; /* Adicionado */
+}
+
+#collapseBtn {
+    font-size: 24px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #333;
+    margin-right: 15px; /* Adicionado */
+}
+
+.sidebar-title {
+    padding: 10px;
+    font-size: 18px;
+    text-align: center;
+    font-family: var(--font-titulo); /* Fonte definida via variável */
+    font-weight: 600;
+    margin-top: 1vw; /* Adicionado */
+}
+
+.sidebar-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-list li {
+    padding: 10px 15px;
+}
+
+.sidebar-link {
+    color: rgb(75, 75, 75);
+    text-decoration: none;
+    display: block;
+    padding: 8px;
+    transition: background 0.3s; /* Adicionado para suavizar mudanças de fundo */
+    font-style: italic; /* Adicionado */
+}
+
+.sidebar-link:hover {
+    background-color: #eaeaea; /* Adicionado */
+}
+
+.sidebar-link.active {
+    font-weight: bold; /* Adicionado */
+}
+
+.sidebar.collapsed {
+    width: 0px; /* Adicionado para o estado colapsado */
+}
+
+
+
+/* Ajusta a posição do menu lateral */
+.sidebar {
+    width: 200px;
+    background-color: rgb(240, 238, 238);
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    position: absolute; /* Posicionado ao lado do conteúdo */
+    left: 0;
+    padding-top: 20px;
+    overflow-y: auto;
+    z-index: 10;
+    height: 50%;
+}
+
+/* Rodapé fixado na parte inferior */
+footer {
+    position: relative; /* Rodapé flui naturalmente abaixo do conteúdo */
+    bottom: 0;
+    width: 100%;
+}
+
+/* Garantir que a área não interativa dentro do sidebar tenha a mesma cor do body */
+#menuLateral {
+    background-color: (240, 238, 238);
+    padding: 10px;
+}
+
+body {
+    background-color: #edece8; 
+}
+.content{
+    background-color: #edece8;
+}
+
+/* Ocultar o menu lateral ao colapsar */
+.sidebar.collapsed {
+    transform: translateX(-100%); /* Move o menu para fora da tela */
+}
+
+/* Ajustar o conteúdo ao colapsar o menu */
+.content.collapsed {
+    margin-left: 0; /* Remove o espaço reservado para o menu lateral */
+}
+</style>
 <body>
   <nav class="navbar navbar-expand-lg navbar-bg-light">
     <a class="navbar-logo" href="../index.html">
       <img src="../img/logo.png" class="logo d-inline-block align-top" alt="Logo">
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-  
+
     <div class="collapse navbar-collapse navbar-collapsed" id="navbarNavAltMarkup">
       <div class="navbar-search-center">
         <form class="d-flex" id="formPesquisa">
-          <input id="inpPesquisa" class="search-input me-2" type="search" placeholder="Pesquisar" aria-label="Pesquisar">
+          <input id="inpPesquisa" class="search-input me-2" type="search" placeholder="Pesquisar"
+            aria-label="Pesquisar">
           <button id="btnPesquisa" class="search-button" type="submit">
             <img src="../img/pesquisar.png" alt="Pesquisar" class="search-icon">
           </button>
         </form>
       </div>
-  
+
       <div class="navbar-icons-right navbar-nav ms-auto">
         <a class="nav-item nav-link" href="../pages/chat.html">
           <img src="../img/chat.png" alt="Chat" class="navbar-icon">
         </a>
         <a class="nav-item nav-link" href="../pages/perfil.html">
-            <img src="../img/usuario.png" alt="Chat" class="usuario-icon">
-          </a>
+          <img src="../img/usuario.png" alt="Chat" class="usuario-icon">
+        </a>
       </div>
 
       <div class="container-fluid">
@@ -56,7 +277,8 @@
                 <a class="nav-link" href="../pages/comprar_moedas.html">Comprar Moedas</a>
               </li>
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
                   Minha Estante
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -74,133 +296,260 @@
       </div>
     </div>
   </nav>
-</div>
+  </div>
 
-<nav class="sidebar" id="sidebar">
+  <nav class="sidebar" id="sidebar">
     <div id="menuLateral">
         <h2 class="sidebar-title">Categorias</h2>
         <ul class="sidebar-list">
-            <li><a href="#" class="sidebar-link active" aria-selected="true">Romance</a></li>
-            <li><a href="#" class="sidebar-link">Ficção</a></li>
-            <li><a href="#" class="sidebar-link">Não-Ficção</a></li>
-            <li><a href="#" class="sidebar-link">Aventura</a></li>
-            <li><a href="#" class="sidebar-link">Fantasia</a></li>
+            <li><a href="#"class="sidebar-link active" aria-selected="true">Aventura</a></li>
             <li><a href="#" class="sidebar-link">Ciência</a></li>
-            <li><a href="#" class="sidebar-link">Romances</a></li>
+            <li><a href="#" class="sidebar-link">Ciências Políticas</a></li>
             <li><a href="#" class="sidebar-link">Desenvolvimento Pessoal</a></li>
-            <li><a href="#" class="sidebar-link">Literatura</a></li>
+            <li><a href="#" class="sidebar-link">Doramas</a></li>
+            <li><a href="#" class="sidebar-link">Fantasia</a></li>
             <li><a href="#" class="sidebar-link">Ficção</a></li>
+            <li><a href="#" class="sidebar-link">Infantil</a></li>
+            <li><a href="#" class="sidebar-link">Liderança</a></li>
+            <li><a href="#" class="sidebar-link">Literatura</a></li>
+            <li><a href="#" class="sidebar-link">Marketing</a></li>
+            <li><a href="#" class="sidebar-link">Mistério</a></li>
+            <li><a href="#" class="sidebar-link">Não-Ficção</a></li>
             <li><a href="#" class="sidebar-link">Paradidáticos</a></li>
+            <li><a href="#" class="sidebar-link">Poesia</a></li>
+            <li><a href="#" class="sidebar-link">Psicanálise</a></li>
+            <li><a href="#" class="sidebar-link">Romance</a></li>
+            <li><a href="#" class="sidebar-link">Romances</a></li>
+            <li><a href="#" class="sidebar-link">Sociologia</a></li>
             <li><a href="#" class="sidebar-link">Suspenses</a></li>
             <li><a href="#" class="sidebar-link">Terapia Familiar</a></li>
-            <li><a href="#" class="sidebar-link">Liderança</a></li>
-            <li><a href="#" class="sidebar-link">Poesia</a></li>
-            <li><a href="#" class="sidebar-link">Ciências Políticas</a></li>
-            <li><a href="#" class="sidebar-link">Pedagogia</a></li>
-            <li><a href="#" class="sidebar-link">Sociologia</a></li>
             <li><a href="#" class="sidebar-link">Terror e Sobrenatural</a></li>
-            <li><a href="#" class="sidebar-link">Marketing</a></li>
-            <li><a href="#" class="sidebar-link">Psicanálise</a></li>
-            <li><a href="#" class="sidebar-link">Mistério</a></li>
-            <li><a href="#" class="sidebar-link">Infantil</a></li>
-            <li><a href="#" class="sidebar-link">Doramas</a></li>
         </ul>
     </div>
 </nav>
 
-
 <div class="content" id="content">
     <div class="content-header">
-        <button id="collapseBtn">☰</button>
-        <h1 class="content-title">
-           Escolha um Livro para Trocar
-        </h1>
-        <button style="border: 0; background-color: rgba(0, 0, 255, 0);">
-        </button>            
-        
+        <button id="collapseBtn" onclick="toggleMenu()">☰</button>
+        <h1 class="content-title">Escolha um Livro para Trocar</h1>
+        <div class="filter-container">
+            <button class="filter-button" onclick="toggleFilterMenu()">
+                <img src="../img/Icones/icone-filtro.png" alt="Ícone de filtro" class="filter-icon">
+            </button>
+            <ul id="filterMenu" class="filter-menu">
+                <li onclick="sortBooks('a-z')">A-Z</li>
+                <li onclick="sortBooks('z-a')">Z-A</li>
+            </ul>
+        </div>
     </div>
 
-
-
-
-  <div class="secao-livros">
-    <h2 class="titulo-secao-livros" id="tituloPesquisa">Carregando...</h2>
-</div>
-
-<div class="carrossel-livros">
-  <button class="button-esquerda">&#8249;</button>
-    <div class="container-carrossel" id="resultado">
-        
-      
-
+    <div class="secao-livros">
+        <h2 class="titulo-secao-livros" id="tituloPesquisa">Carregando...</h2>
     </div>
-    <button class="button-direita">&#8250;</button> <!-- Seta para a direita -->
+
+    <div class="book-grid" id="resultado">
+        <!-- Os livros serão carregados aqui dinamicamente -->
+    </div>
 </div>
 
 
 
-</div>
-
-</div>
-
-  
-
-
-<footer id="rodape" class="fundo-cinza">
-  <div id="conteudo-rodape" class="container-rodape">
+  <footer id="rodape" class="fundo-cinza">
+    <div id="conteudo-rodape" class="container-rodape">
       <!-- Links Úteis -->
       <div id="links-uteis" class="coluna-rodape">
-          <h3 id="titulo-links-uteis" class="titulo-rodape">Links Úteis</h3>
-          <ul id="lista-links" class="lista-rodape">
-              <li id="link-home" class="item-lista">
-                  <a href="../index.html"><img class="link-text" src="../img/Icones/seta_rodape.png" alt="Seta" class="icone-seta">  <span class="link-text">Home</span>
-              </li></a>
-              <li id="link-livros" class="item-lista">
-                  <a href="../pages/TodosLivros.html"><img class="link-text" src="../img/Icones/seta_rodape.png" alt="Seta" class="icone-seta">  <span class="link-text">Livros Disponíveis</span>
-              </li></a>
-              <li id="link-destaques" class="item-lista">
-                  <a href="../pages/comprar_moedas.html"><img class="link-text" src="../img/Icones/seta_rodape.png" alt="Seta" class="icone-seta">  <span class="link-text">Comprar Moedas</span>
-              </li></a>
-              <li id="link-publicar-livro" class="item-lista">
-                  <a href="./TodosLivros.html" onclick="alert('Pesquise seu livro e selecione a opção **TENHO ESSE LIVRO** para fazer seu cadastro. ');"><img class="link-text" src="../img/Icones/seta_rodape.png" alt="Seta" class="icone-seta">  <span class="link-text">Cadastrar Livros</span>
-              </li></a>
-          </ul>
+        <h3 id="titulo-links-uteis" class="titulo-rodape">Links Úteis</h3>
+        <ul id="lista-links" class="lista-rodape">
+          <li id="link-home" class="item-lista">
+            <a href="../index.html"><img class="link-text" src="../img/Icones/seta_rodape.png" alt="Seta"
+                class="icone-seta"> <span class="link-text">Home</span>
+          </li></a>
+          <li id="link-livros" class="item-lista">
+            <a href="../pages/TodosLivros.html"><img class="link-text" src="../img/Icones/seta_rodape.png" alt="Seta"
+                class="icone-seta"> <span class="link-text">Livros Disponíveis</span>
+          </li></a>
+          <li id="link-destaques" class="item-lista">
+            <a href="../pages/comprar_moedas.html"><img class="link-text" src="../img/Icones/seta_rodape.png" alt="Seta"
+                class="icone-seta"> <span class="link-text">Comprar Moedas</span>
+          </li></a>
+          <li id="link-publicar-livro" class="item-lista">
+            <a href="./TodosLivros.html"
+              onclick="alert('Pesquise seu livro e selecione a opção **TENHO ESSE LIVRO** para fazer seu cadastro. ');"><img
+                class="link-text" src="../img/Icones/seta_rodape.png" alt="Seta" class="icone-seta"> <span
+                class="link-text">Cadastrar Livros</span>
+          </li></a>
+        </ul>
       </div>
 
       <!-- Localização -->
-<div id="localizacao" class="coluna-rodape centralizado">
-  <h3 id="titulo-localizacao" class="titulo-rodape">Localização</h3>
-  <p id="texto-localizacao" class="texto-rodape">
-      <img src="../img/Icones/icone_localizacao.png" alt="Localização" class="icone-seta">
-      <span class="text-rodape">Brasil</span>
-  </p>
-  
-</div>
+      <div id="localizacao" class="coluna-rodape centralizado">
+        <h3 id="titulo-localizacao" class="titulo-rodape">Localização</h3>
+        <p id="texto-localizacao" class="texto-rodape">
+          <img src="../img/Icones/icone_localizacao.png" alt="Localização" class="icone-seta">
+          <span class="text-rodape">Brasil</span>
+        </p>
+
+      </div>
 
 
       <!-- Informações de Contato -->
       <div id="informacoes-contato" class="coluna-rodape">
-          <h3 id="titulo-contato" class="titulo-rodape">Informações de Contato</h3>
-          <p id="telefone1" class="texto-rodape">
-              <img src="../img/Icones/icone_telefone.png" alt="Telefone" class="icone-contato"><span class="text-rodape">+55 (11) 97834-5522</span> 
-          </p>
-          <p id="telefone2" class="texto-rodape">
-              <img src="../img/Icones/icone_telefone.png" alt="Telefone" class="icone-contato"> <span class="text-rodape">+55 (11) 96462-6242</span>  
-          </p>
-          <p id="email-sac" class="texto-rodape">
-              <img src="../img/Icones/icone_email.png" alt="Email" class="icone-contato"><span class="text-rodape">SAC: alexandria.tcc.01@gmail.com</span>   
-          </p>
+        <h3 id="titulo-contato" class="titulo-rodape">Informações de Contato</h3>
+        <p id="telefone1" class="texto-rodape">
+          <img src="../img/Icones/icone_telefone.png" alt="Telefone" class="icone-contato"><span class="text-rodape">+55
+            (11) 97834-5522</span>
+        </p>
+        <p id="telefone2" class="texto-rodape">
+          <img src="../img/Icones/icone_telefone.png" alt="Telefone" class="icone-contato"> <span
+            class="text-rodape">+55 (11) 96462-6242</span>
+        </p>
+        <p id="email-sac" class="texto-rodape">
+          <img src="../img/Icones/icone_email.png" alt="Email" class="icone-contato"><span class="text-rodape">SAC:
+            alexandria.tcc.01@gmail.com</span>
+        </p>
       </div>
-  </div>
+    </div>
 
-  <!-- Termos -->
-<div id="rodape-termos" class="centralizado text-rodape">
-  <span class="link-text">Termos de Serviço e Política de Privacidade | 3DSA | Alexandria</span>
-</div>
+    <!-- Termos -->
+    <div id="rodape-termos" class="centralizado text-rodape">
+      <span class="link-text">Termos de Serviço e Política de Privacidade | 3DSA | Alexandria</span>
+    </div>
 
-</footer>
+  </footer>
 
-    
+<script>
+function toggleMenu() {
+    const sidebar = document.getElementById("sidebar");
+    const content = document.getElementById("content");
+    sidebar.classList.toggle("collapsed");
+    content.classList.toggle("collapsed");
+}
+
+function toggleFilterMenu() {
+    const filterMenu = document.getElementById("filterMenu");
+    filterMenu.style.display = filterMenu.style.display === "block" ? "none" : "block";
+}
+
+function sortBooks(order) {
+    const bookGrid = document.getElementById("resultado");
+    const books = Array.from(bookGrid.querySelectorAll(".book-card"));
+
+    books.sort((a, b) => {
+        const titleA = a.querySelector(".book-title").textContent.toLowerCase();
+        const titleB = b.querySelector(".book-title").textContent.toLowerCase();
+        return order === "a-z" ? titleA.localeCompare(titleB) : titleB.localeCompare(titleA);
+    });
+
+    books.forEach(book => bookGrid.appendChild(book));
+    document.getElementById("filterMenu").style.display = "none";
+}
+
+function toggleMenu() {
+    const sidebar = document.getElementById("sidebar");
+    const content = document.getElementById("content");
+    sidebar.classList.toggle("collapsed");
+    content.classList.toggle("collapsed");
+}
+
+function toggleFilterMenu() {
+    const filterMenu = document.getElementById("filterMenu");
+    filterMenu.style.display = filterMenu.style.display === "block" ? "none" : "block";
+}
+
+function sortBooks(order) {
+    const bookGrid = document.getElementById("resultado");
+    const books = Array.from(bookGrid.querySelectorAll(".book-card"));
+
+    books.sort((a, b) => {
+        const titleA = a.querySelector(".book-title").textContent.toLowerCase();
+        const titleB = b.querySelector(".book-title").textContent.toLowerCase();
+        return order === "a-z" ? titleA.localeCompare(titleB) : titleB.localeCompare(titleA);
+    });
+
+    books.forEach(book => bookGrid.appendChild(book));
+    document.getElementById("filterMenu").style.display = "none";
+}
+
+function filterByCategory(category) {
+    const bookGrid = document.getElementById("resultado");
+    const books = Array.from(bookGrid.querySelectorAll(".book-card"));
+
+    books.forEach(book => {
+        const bookCategory = book.getAttribute("data-category");
+        book.style.display = (category === "Todos" || bookCategory === category) ? "block" : "none";
+    });
+}
+
+function moveActiveToTop() {
+    const menuLateral = document.querySelector("#menuLateral .sidebar-list");
+    const activeItem = menuLateral.querySelector(".sidebar-link.active");
+
+    if (activeItem) {
+        const listItem = activeItem.parentElement; // <li> que contém o link ativo
+        menuLateral.prepend(listItem); // Move o <li> para o topo da lista
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const links = document.querySelectorAll(".sidebar-link");
+    const bookGrid = document.getElementById("resultado");
+
+    // Carregamento inicial: Configura "Todos" como ativo
+    filterByCategory("Todos");
+    moveActiveToTop();
+
+    // Gerenciar o clique nos links do menu lateral
+    links.forEach(link => {
+        link.addEventListener("click", (e) => {
+            e.preventDefault();
+
+            // Remove 'active' de todos os links
+            links.forEach(item => item.classList.remove("active"));
+
+            // Adiciona 'active' ao link clicado
+            link.classList.add("active");
+
+            // Filtra os livros com base na categoria
+            const selectedCategory = link.textContent.trim();
+            filterByCategory(selectedCategory);
+
+            // Move o item ativo para o topo
+            moveActiveToTop();
+        });
+    });
+
+    // Configurar clique para fechar o menu de filtro ao clicar fora
+    window.addEventListener("click", (e) => {
+        const filterMenu = document.getElementById("filterMenu");
+        const filterButton = document.querySelector(".filter-button");
+
+        if (!filterMenu.contains(e.target) && !filterButton.contains(e.target)) {
+            filterMenu.style.display = "none";
+        }
+    });
+
+    // Simula carregamento de livros
+    const books = [
+        { title: "Livro de Aventura", category: "Aventura" },
+        { title: "Livro de Ficção", category: "Ficção" },
+        { title: "Livro de Fantasia", category: "Fantasia" },
+        { title: "Livro de Marketing", category: "Marketing" },
+        { title: "Livro Infantil", category: "Infantil" },
+    ];
+
+    books.forEach(book => {
+        const bookCard = document.createElement("div");
+        bookCard.classList.add("book-card");
+        bookCard.setAttribute("data-category", book.category);
+        bookCard.innerHTML = `
+            <h3 class="book-title">${book.title}</h3>
+            <p class="book-category">${book.category}</p>
+        `;
+        bookGrid.appendChild(bookCard);
+    });
+});
+
+</script>
 
 
 
@@ -220,8 +569,9 @@
 
 
 
-<script src="../js/js/bootstrap.bundle.min.js"></script>
-<script src="../js/TodosLivros.js" type="module"></script>
-<script src="../js/pesquisa.js"></script>
+  <script src="../js/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/TodosLivros.js" type="module"></script>
+  <script src="../js/pesquisa.js"></script>
 </body>
+
 </html>
