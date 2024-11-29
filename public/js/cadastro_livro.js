@@ -144,3 +144,59 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(element);
     });
 });
+ // Função para mostrar as imagens selecionadas dentro do campo de input
+ function previewImages(event) {
+    const input = event.target;
+    const files = input.files;
+
+    // Limita a seleção de imagens a no máximo 3
+    if (files.length > 3) {
+      alert('Você pode selecionar no máximo 3 imagens.');
+      input.value = ""; // Limpa o campo caso exceda o limite
+      return;
+    }
+
+    const previewContainer = document.getElementById('image-preview');
+    const imageNamesContainer = document.getElementById('image-names');
+    previewContainer.innerHTML = ''; // Limpa as imagens anteriores
+    imageNamesContainer.innerHTML = ''; // Limpa os nomes anteriores
+
+    let currentIndex = 0;
+
+    // Exibe as miniaturas das imagens dentro do input
+    for (let i = 0; i < files.length; i++) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        img.style.position = 'absolute';
+        img.style.width = '100%'; // Faz com que a imagem ocupe toda a largura do campo de input
+        img.style.height = '100%'; // Faz com que a imagem ocupe toda a altura do campo de input
+        img.style.objectFit = 'cover'; // Assegura que a imagem será cortada proporcionalmente
+        img.style.transition = 'opacity 1s ease-in-out';
+        img.style.opacity = '0'; // Começa invisível
+
+        previewContainer.appendChild(img);
+
+        // Adiciona o nome da imagem abaixo do input
+        const name = document.createElement('p');
+        name.textContent = files[i].name; // Nome do arquivo
+        imageNamesContainer.appendChild(name);
+        
+        // Aguardar a imagem carregar para aplicar a alternância
+        setTimeout(() => {
+          img.style.opacity = '1'; // Torna a imagem visível
+        }, 10);
+      };
+      reader.readAsDataURL(files[i]);
+    }
+
+    // Alterna entre as imagens a cada 3 segundos
+    setInterval(function() {
+      const images = previewContainer.querySelectorAll('img');
+      images.forEach((img, index) => {
+        img.style.opacity = (index === currentIndex) ? '1' : '0'; // Alterna a opacidade
+      });
+      currentIndex = (currentIndex + 1) % files.length; // Ciclo entre as imagens
+    }, 3000); // Altera a imagem a cada 3 segundos
+  }

@@ -442,3 +442,28 @@ hr {
         margin-left: 1vw;
     }
 }
+/* Estilos para o campo de input com as imagens alternando */
+#image-preview {
+    position: relative;
+    width: 100%;
+    height: 200px; /* Define uma altura para o campo de imagens */
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    overflow: hidden; /* Garante que as imagens não ultrapassem os limites */
+  }
+  
+  #image-preview img {
+    transition: opacity 1s ease-in-out; /* Faz a transição suave entre as imagens */
+  }
+  
+  /* Estilos para os nomes das imagens abaixo do input */
+  .image-names {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .image-names p {
+    margin: 3px 0;
+  }
+  
