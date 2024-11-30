@@ -186,8 +186,6 @@ body, html {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 5%;
-    
 }
 
 
@@ -829,7 +827,7 @@ body {
 .livros {
     display: flex;
     flex-wrap: wrap;   /* Permite que os cards quebrem linha quando necessário */
-    justify-content: space-between;  /* Espaçamento entre os cards */
+    justify-content: center;  /* Espaçamento entre os cards */
     gap: 20px; /* Espaço entre os cards */
     margin-top: 20px;
   }

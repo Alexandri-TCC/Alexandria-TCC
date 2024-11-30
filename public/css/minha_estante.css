@@ -224,7 +224,7 @@ body, html {
 .content-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .filter-container {

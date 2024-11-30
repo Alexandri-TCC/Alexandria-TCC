@@ -204,3 +204,31 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 });
+document.addEventListener("DOMContentLoaded", () => {
+  const sidebarList = document.querySelector(".sidebar-list");
+
+  sidebarList.addEventListener("click", (event) => {
+    if (event.target && event.target.classList.contains("sidebar-link")) {
+      const activeLink = sidebarList.querySelector(".active");
+      if (activeLink) {
+        activeLink.classList.remove("active");
+        activeLink.removeAttribute("aria-selected");
+      }
+
+      const clickedLink = event.target;
+      clickedLink.classList.add("active");
+      clickedLink.setAttribute("aria-selected", "true");
+
+      const listItem = clickedLink.closest("li");
+      sidebarList.prepend(listItem);
+
+      // Rola o menu inteiro para o topo
+      sidebarList.scrollTo({
+        top: 0, // Garante que o topo da lista esteja visível
+        behavior: "smooth" // Rolagem suave
+      });
+    }
+  });
+});
+
+
